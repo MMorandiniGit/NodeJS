@@ -122,13 +122,21 @@ router.put('/lists/:name', (req, res) => {
 
 router.put('/lists/:name/songs/:title', (req, res) => {
     let name = req.params.name
+    let title = req.params.title
     let list = lists.find(x => x.name == name)
     if (list == null) {
         res.status(404).send("404 Not Found")
+        return
     }
-    
-    let song = req.body.songs
+    let song = list.songs.find(x => x.title == title)
+    if (song == null) {
+        res.status(404).send("404 Not Found")
+    }
 
+    song.title = req.body.title
+    song.artist = req.body.artist
+    song.albumName = req.body.albumName
+    song.year = req.body.year
     res.send(song)
 })
 
@@ -141,6 +149,23 @@ router.delete('/lists/:name', (req, res) => {
     let index = lists.indexOf(listToDelete)
     lists.splice(index, 1)
     res.status(204).send("Se elimino la PlayList")
+})
+
+router.delete('/lists/:name/songs/:title', (req, res) => {
+    let name = req.params.name
+    let title = req.params.title
+    let list = lists.find(x => x.name == name)
+    if (list == null) {
+        res.status(404).send("404 Not Found")
+        return
+    }
+    let song = list.songs.filter(x => x.title == title).at(0)
+    if (song == null) {
+        res.status(404).send("404 Not Found")
+    }
+    let index = list.songs.indexOf(song)
+    list.songs.splice(index, 1)
+    res.status(204).send("Se elimino la cancion")
 })
 
 export default router
