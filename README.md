@@ -5,7 +5,7 @@
 
 ## Computación 2022
 
-**Asignatura**: <!-- REEMPLAZA este comentario por el nombre de la asignatura -->
+**Asignatura**: Administracion de sistemas y Redes
 
 **Nombre TP**: API Playlist
 
@@ -15,19 +15,17 @@
 
 # API Playlist
 
-_Acá va un párrafo que describa lo que es el proyecto._
+La API posee una colecciones de listas de reproducción. Cada lista de reproducción posee un nombre, descripción y un listado de canciones. Cada canción posee un título, el nombre del artista, el nombre del álbum y el año de edición del álbum.
+
+Como cada playlist tiene canciones es necesario implementar un nuevo recurso que permita gestionar las canciones de una lista de reproducción concreta. En la siguiente tabla se describe las características del servicio.
+
 
 ## Comenzando 🚀
 
 Clonar el repositorio github, desde Github Desktop o ejecutar en la terminal o CMD:
-<!-- cambia el link de abajo al de tu repositorio y BORRA ESTE COMENTARIO -->
 ```text
 git clone https://github.com/MMorandiniGit/NodeJS
 ```
-
-## Despliegue 📦
-
-Agrega notas adicionales sobre que cosas se debe instalar, configurar y como hacer deploy
 
 ## Construido con 🛠️
 
