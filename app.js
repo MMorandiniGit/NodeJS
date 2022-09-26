@@ -27,19 +27,62 @@ let lists = [
                 year: '2022'
             }
         ]
-    }
+    },
+    {
+        name: 'Rock',
+        description: 'The best rock music in the world',
+        songs: [
+            {
+                title: 'Shoot in the dark',
+                artist: 'AC/DC',
+                albumName: 'Power Up',
+                year: '2000'
+            },
+            {
+                title: 'Retrograde',
+                artist: 'Pearl Jam',
+                albumName: 'Gigaton',
+                year: '1998'
+            }
+        ]
+    },
+
 ]
 
 app.get('/lists', (req, res) => {
     res.send(lists)
 })
 
-app.post('/lists', (req, res) => {
-    lists.push(req.body)
-    res.send(res.body)
+app.get('/lists/:name', function (req, res) {
+    let name = req.params.name
+    let list = lists.find(x => x.name == name)
+    if (list == null) {
+        res.status(404).send("404 Not Found")
+        return
+    }
+
+    res.send(list)
 })
 
+app.post('/lists', (req, res) => {
+    let name = req.body.name
+    let description = req.body.description
+    let songs = req.body.songs
+    if (name == null || name == '') {
+        res.status(400).send("400 Bad Request")
+        return
+    }
 
+    lists.push({ name: name, description: description, songs: songs })
+    res.status(201).send(lists)
+})
 
+app.put('/lists/:name', (req, res) => {
+    let name = req.params.name
+    let list = lists.find(x => x.name == name)
+    list.list = req.body.list
+    list.description = req.body.description
+    res.send(list)
+})
 
 app.listen(port)
