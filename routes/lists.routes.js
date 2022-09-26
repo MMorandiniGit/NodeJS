@@ -1,52 +1,19 @@
-import express, { response } from 'express'
+import express from 'express'
+import lists from '../models/lists.model'
 
 const router = express.Router()
 
-let lists = [
-    {
-        name: 'Pop',
-        description: 'The best pop music in the world',
-        songs: [
-            {
-                title: 'late at night',
-                artist: 'Roddy Ricch',
-                albumName: 'LIVE LIFE FAST',
-                year: '2022'
-            },
-            {
-                title: 'BUTTERFLY EFFECT',
-                artist: 'Travis Scott',
-                albumName: 'ASTROWORLD',
-                year: '2022'
-            }
-        ]
-    },
-    {
-        name: 'Rock',
-        description: 'The best rock music in the world',
-        songs: [
-            {
-                title: 'Shoot in the dark',
-                artist: 'AC/DC',
-                albumName: 'Power Up',
-                year: '2000'
-            },
-            {
-                title: 'Retrograde',
-                artist: 'Pearl Jam',
-                albumName: 'Gigaton',
-                year: '1998'
-            }
-        ]
-    },
-
-]
-
-router.get('/lists', (req, res) => {
-    res.send(lists)
+router.get('/lists', async (req, res) => {
+    try {
+        const list = await list.find()
+        res.send(lists)
+    } catch (err) {
+        res.status(500).send(err)
+    }
+    
 })
 
-router.get('/lists/:name', (req, res) => {
+router.get('/lists/:name', async (req, res) => {
     let name = req.params.name
     let list = lists.find(x => x.name == name)
     if (list == null) {
