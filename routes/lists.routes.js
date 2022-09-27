@@ -24,9 +24,9 @@ router.get('/lists/:name', async (req, res) => {
     res.send(list)
 })
 
-router.get('/lists/:name/songs', (req, res) => {
-    let name = req.params.name
-    let list = lists.find(x => x.name == name)
+router.get('/lists/:name/songs', async (req, res) => {
+    let lname = req.params.name
+    let list = await lists.findOne({name: lname})
     res.send(list.songs)
 })
 

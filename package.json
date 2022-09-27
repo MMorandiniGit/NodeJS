@@ -4,9 +4,11 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "nodemon": "node app.js",
-    "dev": "nodemon ./ --exec babel-node"
+    "build": "npm run clean && babel ./src --out-dir dist",
+    "start": "node ./dist/app.js",
+    "clean": "rm -rf ./dist && mkdir dist",
+    "dev": "nodemon ./ --exec babel-node",
+    "nodemon": "node app.js"
   },
   "repository": {
     "type": "git",
