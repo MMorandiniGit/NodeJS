@@ -1,5 +1,6 @@
 import express from 'express'
 import lists from '../models/lists.model'
+import song from '../models/song.modej'
 
 const router = express.Router()
 
@@ -10,24 +11,34 @@ router.get('/lists', async (req, res) => {
     } catch (err) {
         res.status(500).send(err)
     }
-    
+
 })
 
 router.get('/lists/:name', async (req, res) => {
-    let name = req.params.name
-    let list = lists.find(x => x.name == name)
-    if (list == null) {
-        res.status(404).send("404 Not Found")
-        return
+    try {
+        let name = req.params.name
+        const list = await lists.findOne({ name: name })
+        if (list == null) {
+            res.status(404).send("404 Not Found")
+            return
+        }
+
+        res.send(list)
+
+    } catch (err) {
+        res.status(500).send(err)
     }
 
-    res.send(list)
 })
 
 router.get('/lists/:name/songs', async (req, res) => {
-    let lname = req.params.name
-    let list = await lists.findOne({name: lname})
-    res.send(list.songs)
+    try {
+        let name = req.params.name
+        const list = await lists.findOne({ name: name })
+        res.send(list.songs)
+    } catch (err) {
+        res.status(500).send(err)
+    }
 })
 
 router.get('/lists/:name/songs/:title', (req, res) => {
@@ -37,7 +48,7 @@ router.get('/lists/:name/songs/:title', (req, res) => {
     let song = list.songs.find(x => x.title == title)
     if (song == null || name == null) {
         res.status(404).send("404 Not Found")
-    } 
+    }
     res.send(song)
 })
 
@@ -82,9 +93,9 @@ router.put('/lists/:name', (req, res) => {
     if (lname != list.name) {
         res.status(409).send("409 Conflict")
         return
-    }    
+    }
     else
-    res.status(204).send(list)     
+        res.status(204).send(list)
 })
 
 router.put('/lists/:name/songs/:title', (req, res) => {
@@ -112,7 +123,7 @@ router.delete('/lists/:name', (req, res) => {
     let listToDelete = lists.filter(x => x.name == name).at(0)
     if (listToDelete == null)
         res.status(404).send("404 Not Found")
-        
+
     let index = lists.indexOf(listToDelete)
     lists.splice(index, 1)
     res.status(204).send("Se elimino la PlayList")

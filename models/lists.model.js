@@ -11,12 +11,7 @@ const listsSchema = new mongoose.Schema({
     },
     songs: {
         type: Array,
-        required: false
-        ({
-            type: String,
-            required: true
-        }
-        )
+        required: true
     }
 },
     {
